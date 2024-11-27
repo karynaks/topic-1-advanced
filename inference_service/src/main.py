@@ -13,10 +13,17 @@ app = FastAPI()
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Set OpenAI API client and model name
-client = OpenAI(
-    api_key=os.environ.get("OPENAI_API_KEY"),
-)
+if "BASE_URL" in os.environ:
+    client = OpenAI(
+        base_url=os.environ.get("BASE_URL"),
+        api_key=os.environ.get("OPENAI_API_KEY")
+    )
+else:
+    # Set OpenAI API client and model name
+    client = OpenAI(
+        api_key=os.environ.get("OPENAI_API_KEY"),
+    )
+
 model_name = os.getenv("MODEL_NAME")
 
 
